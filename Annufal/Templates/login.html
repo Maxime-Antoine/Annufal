@@ -1,0 +1,18 @@
+﻿<div ng-if="!isLoggedIn()">
+    <div class="form-group">
+        <label for="login" class="control-label">Login: </label>
+        <input type="text" class="form-control" name="login" id="login" ng-model="username" />
+    </div>
+    <div class="form-group">
+        <label for="password" class="control-label">Password: </label>
+        <input type="text" class="form-control" name="password" id="password" ng-model="password" />
+    </div>
+    <div class="row">
+        <button class="btn btn-default col-sm-6" ng-click="login(username, password)">Login</button>
+        <button class="btn btn-default col-sm-6" ng-click="goToRegister()">Register</button>
+    </div>
+</div>
+<div ng-if="isLoggedIn()">
+    <span>Token: {{ getAuthToken() }}</span>
+    <button class="btn btn-default" ng-click="logout()">Logout</button>
+</div>
