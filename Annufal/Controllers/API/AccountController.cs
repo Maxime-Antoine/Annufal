@@ -1,65 +1,125 @@
 ﻿using Annufal.Authentication;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Owin;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
-namespace Annufal.API.Controllers
+namespace Annufal.Controllers.API
 {
-    [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    [Authorize]
+    [RoutePrefix("api/account")]
+    public class AccountController : BaseApiController
     {
-        private AuthRepository _repo = null;
-
-        public AccountController()
+        [Route("users")]
+        public IHttpActionResult GetUsers()
         {
-            _repo = new AuthRepository();
+            return Ok(this.AppUserManager.Users.ToList().Select(u => this.ModelFactory.Create(u)));
         }
 
-        //POST api/Account/Register
+
+        [Route("user/{id:guid}", Name = "GetUserById")]
+        public async Task<IHttpActionResult> GetUserById(string id)
+        {
+            var user = await this.AppUserManager.FindByIdAsync(id);
+
+            if (user == null)
+                return NotFound();
+            else
+                return Ok(this.ModelFactory.Create(user));
+        }
+
+        [Route("user/{username}")]
+        public async Task<IHttpActionResult> GetUserByName(string username)
+        {
+            var user = await this.AppUserManager.FindByNameAsync(username);
+
+            if (user == null)
+                return NotFound();
+            else
+                return Ok(this.ModelFactory.Create(user));
+        }
+
         [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel userModel)
+        [Route("create")]
+        public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            var user = new ApplicationUser()
+            {
+                UserName = createUserModel.Username,
+                Email = createUserModel.Email,
+                FirstName = createUserModel.FirstName,
+                LastName = createUserModel.LastName,
+                JoinDate = DateTime.Now.Date
+            };
 
-            IHttpActionResult errorResult = _GetErrorResult(result);
+            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
 
-            if (errorResult != null)
-                return errorResult;
+            if (!addUserResult.Succeeded)
+                return GetErrorResult(addUserResult);
+
+            //send confirmation email
+            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+            await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+
+            return Created(locationHeader, ModelFactory.Create(user));
+        }
+
+        [AllowAnonymous]
+        [Route("ConfirmEmail", Name="ConfirmEmailRoute")]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            {
+                ModelState.AddModelError("", "User Id and Code are required");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
+
+            if (result.Succeeded)
+                return Ok();
+            else
+                return GetErrorResult(result);
+        }
+
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+                return GetErrorResult(result);
 
             return Ok();
         }
 
-        protected override void Dispose(bool disposing)
+        [Route("user/{id:guid}")]
+        public async Task<IHttpActionResult> DeleteUser(string id)
         {
-            if (disposing)
-                _repo.Dispose();
+            var appUser = await this.AppUserManager.FindByIdAsync(id);
 
-            base.Dispose(disposing);
-        }
+            if (appUser == null)
+                return NotFound();
 
-        private IHttpActionResult _GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-                return InternalServerError();
+            IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
 
             if (!result.Succeeded)
-            {
-                if (result.Errors.Count() != 0)
-                    foreach (string error in result.Errors)
-                        ModelState.AddModelError("", error);
+                return GetErrorResult(result);
 
-                if (ModelState.IsValid) // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-
-                return BadRequest(ModelState);
-            }
-
-            return null;
+            return Ok();
         }
     }
 }

@@ -4,10 +4,12 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
+using System.Configuration;
 using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Web;
@@ -42,17 +44,38 @@ namespace Annufal
 
         private void _ConfigureOAuth(IAppBuilder app)
         {
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            //create auth classes in owin context
+            app.CreatePerOwinContext(AuthDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+
+            //JWT token generation
+            OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
-                AllowInsecureHttp = true,
+                AllowInsecureHttp = true, //to change in prod
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJWTFormatProvider("http://localhost:60481/")
             };
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
 
-            //Token generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            //JWT token comsuption
+            var issuer = "http://localhost:60481/";
+            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
+
+            //Api controllers with [Authorize] filter will be validated with JWT
+            app.UseJwtBearerAuthentication(
+                new JwtBearerAuthenticationOptions
+                {
+                    AuthenticationMode = AuthentaticationMode.Active,
+                    AllowedAudiences = new[] { audienceId },
+                    IssuerSecurityTokenProviders = new IIsuerSecurityTokenProvider[]
+                    {
+                        new SymetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
+                    }
+                });
+
         }
 
         private void _WebApiConfig(HttpConfiguration config)

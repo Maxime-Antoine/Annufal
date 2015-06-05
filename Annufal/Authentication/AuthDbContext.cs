@@ -7,18 +7,23 @@ using System.Web;
 
 namespace Annufal.Authentication
 {
-    public class AuthContext : IdentityDbContext<IdentityUser>
+    public class AuthDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AuthContext() : base("AuthContext")
+        public AuthDbContext() : base("AuthContext")
         {
             //Database.SetInitializer(new AuthContextInitializer());
+        }
+
+        public static AuthDbContext Create()
+        {
+            return new AuthDbContext();
         }
     }
 
     //DEBUG
-    public class AuthContextInitializer : DropCreateDatabaseAlways<AuthContext>
+    public class AuthContextInitializer : DropCreateDatabaseAlways<AuthDbContext>
     {
-        protected override void Seed(AuthContext context)
+        protected override void Seed(AuthDbContext context)
         {
             base.Seed(context);
         }
