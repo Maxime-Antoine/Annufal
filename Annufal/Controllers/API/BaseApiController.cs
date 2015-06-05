@@ -14,12 +14,21 @@ namespace Annufal.Controllers.API
     {
         private ModelFactory _modelFactory;
         private ApplicationUserManager _appUserManager = null;
+        private ApplicationRoleManager _appRoleManager = null;
 
         protected ApplicationUserManager AppUserManager
         {
             get
             {
                 return _appUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+        }
+
+        protected ApplicationRoleManager AppRoleManager
+        {
+            get
+            {
+                return _appRoleManager ?? Request.GetOwinContext().Get<ApplicationRoleManager>();
             }
         }
 

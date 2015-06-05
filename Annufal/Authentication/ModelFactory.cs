@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -33,6 +34,16 @@ namespace Annufal.Authentication
                 Claims = _appUserManager.GetClaimsAsync(appUser.Id).Result
             };
         }
+
+        public RoleReturnModel Create(IdentityRole appRole)
+        {
+            return new RoleReturnModel
+            {
+                Url = _urlHelper.Link("GetRoleById", new { id = appRole.Id }),
+                Id = appRole.Id,
+                Name = appRole.Name
+            };
+        }
     }
 
     public class UserReturnModel
@@ -47,5 +58,12 @@ namespace Annufal.Authentication
         public DateTime JoinDate { get; set; }
         public IList<string> Roles { get; set; }
         public IList<System.Security.Claims.Claim> Claims { get; set; }
+    }
+
+    public class RoleReturnModel
+    {
+        public string Url { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

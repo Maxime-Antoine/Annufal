@@ -4,13 +4,13 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
+using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
 using System.Configuration;
-using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
@@ -47,6 +47,7 @@ namespace Annufal
             //create auth classes in owin context
             app.CreatePerOwinContext(AuthDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             //JWT token generation
             OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
@@ -68,14 +69,13 @@ namespace Annufal
             app.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
-                    AuthenticationMode = AuthentaticationMode.Active,
+                    AuthenticationMode = AuthenticationMode.Active,
                     AllowedAudiences = new[] { audienceId },
-                    IssuerSecurityTokenProviders = new IIsuerSecurityTokenProvider[]
+                    IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
-                        new SymetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
+                        new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
                     }
                 });
-
         }
 
         private void _WebApiConfig(HttpConfiguration config)

@@ -1,11 +1,8 @@
 ﻿using Annufal.Authentication;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Owin;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace Annufal.Controllers.API
@@ -14,13 +11,14 @@ namespace Annufal.Controllers.API
     [RoutePrefix("api/account")]
     public class AccountController : BaseApiController
     {
+        [Authorize(Roles="Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
             return Ok(this.AppUserManager.Users.ToList().Select(u => this.ModelFactory.Create(u)));
         }
 
-
+        [Authorize(Roles="Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUserById(string id)
         {
@@ -32,6 +30,7 @@ namespace Annufal.Controllers.API
                 return Ok(this.ModelFactory.Create(user));
         }
 
+        [Authorize(Roles="Admin")]
         [Route("user/{username}")]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
@@ -74,6 +73,7 @@ namespace Annufal.Controllers.API
             return Created(locationHeader, ModelFactory.Create(user));
         }
 
+        [HttpGet]
         [AllowAnonymous]
         [Route("ConfirmEmail", Name="ConfirmEmailRoute")]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
@@ -106,6 +106,7 @@ namespace Annufal.Controllers.API
             return Ok();
         }
 
+        [Authorize(Roles="Admin")]
         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
@@ -120,6 +121,45 @@ namespace Annufal.Controllers.API
                 return GetErrorResult(result);
 
             return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}/roles")]
+        public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
+        {
+            var appUser = await this.AppUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+                return NotFound();
+
+            var currentRoles = await this.AppUserManager.GetRolesAsync(appUser.Id);
+
+	        var rolesNotExists = rolesToAssign.Except(this.AppRoleManager.Roles.Select(x => x.Name)).ToArray();
+
+	        if (rolesNotExists.Count() > 0) 
+            {
+		        ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+		        return BadRequest(ModelState);
+	        }
+
+	        IdentityResult removeResult = await this.AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+
+	        if (!removeResult.Succeeded)
+	        {
+		        ModelState.AddModelError("", "Failed to remove user roles");
+		        return BadRequest(ModelState);
+	        }
+
+	        IdentityResult addResult = await this.AppUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+
+	        if (!addResult.Succeeded)
+	        {
+		        ModelState.AddModelError("", "Failed to add user roles");
+		        return BadRequest(ModelState);
+	        }
+
+	        return Ok();
         }
     }
 }
