@@ -20,7 +20,6 @@ namespace Annufal.Authentication
         }
     }
 
-    //DEBUG
     internal class AuthContextInitializer : DropCreateDatabaseAlways<AuthDbContext>
     {
         protected override void Seed(AuthDbContext context)
