@@ -11,7 +11,7 @@ namespace Annufal.Authentication
         public AuthDbContext()
             : base("AuthContext")
         {
-            //Database.SetInitializer(new AuthContextInitializer());
+            Database.SetInitializer(new AuthContextInitializer());
         }
 
         public static AuthDbContext Create()
@@ -25,9 +25,9 @@ namespace Annufal.Authentication
     {
         protected override void Seed(AuthDbContext context)
         {
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new AuthDbContext()));
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new AuthDbContext()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
             var user = new ApplicationUser()
             {
@@ -39,7 +39,7 @@ namespace Annufal.Authentication
                 JoinDate = DateTime.Now.AddYears(-3)
             };
 
-            manager.Create(user, "Super@dmin!");
+            manager.Create(user, "Super@dmin42");
 
             if (roleManager.Roles.Count() == 0)
             {

@@ -11,12 +11,12 @@ using System.Web.Http;
 
 namespace Annufal.Controllers.API
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [RoutePrefix("api/roles")]
     public class RoleController : BaseApiController
     {
         [Route("{id:guid}", Name = "GetRoleById")]
-        public async Task<IHttpActionResult> GetRoles(string id)
+        public async Task<IHttpActionResult> GetRoleById(string id)
         {
             var role = await this.AppRoleManager.FindByIdAsync(id);
 
