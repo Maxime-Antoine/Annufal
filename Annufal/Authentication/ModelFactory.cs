@@ -26,7 +26,6 @@ namespace Annufal.Authentication
                 Url = _urlHelper.Link("GetUserById", new { id = appUser.Id }),
                 Id = appUser.Id,
                 UserName = appUser.UserName,
-                FullName = string.Format("{0} {1}", appUser.FirstName, appUser.LastName),
                 Email = appUser.Email,
                 EmailConfirmed = appUser.EmailConfirmed,
                 JoinDate = appUser.JoinDate,

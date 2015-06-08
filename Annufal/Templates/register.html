@@ -1,118 +1,48 @@
-<div class="container">
+<div class="container" ng-controller="registerCtrl">
 	<div class="row well">
 		<h1 class="text-center">Nouveau compte</h1>
 	</div>
-	<div>
-		<form name="registerForm" class="form col-sm-10 col-sm-offset-1">
-			<div class="row">
-				<div class="form-group col-sm-6">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<form name="form" class="form col-sm-10 col-sm-offset-1" novalidate>
+				<div class="form-group has-feedback" ng-class="{ 'has-success': form.login.$dirty && form.login.$valid,
+																 'has-error': form.login.$dirty && form.login.$invalid }">
 					<label for="login" class="control-label">Login: </label>
-					<input type="text" class="form-control" id="login" name="login" />
+					<input type="text" class="form-control" id="login" name="login" ng-model="usr.login" ng-minlength="3" ng-maxlength="25" required />
+					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.login.$dirty && form.login.$valid,
+																			  'glyphicon-remove': form.login.$dirty && form.login.$invalid }"></span>
+					<span ng-show="form.login.$dirty && form.login.$invalid" style="color:red">Login de 3 lettres minimum requis</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
+				<div class="form-group has-feedback" ng-class="{ 'has-success': form.password.$dirty && form.password.$valid,
+																 'has-error': form.password.$dirty && form.password.$invalid }">
 					<label for="password">Password: </label>
-					<input type="password" class="form-control" id="password" name="password" />
+					<input type="password" class="form-control" id="password" name="password" ng-model="usr.password" ng-minlength="6" required />
+					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.password.$dirty && form.password.$valid,
+																			  'glyphicon-remove': form.password.$dirty && form.password.$invalid }"></span>
+					<span ng-show="form.password.$dirty && form.password.$invalid" style="color:red">Password de 6 lettres minimum requis</span>
 				</div>
-				<div class="form-group col-sm-6">
+				<div class="form-group has-feedback" ng-class="{ 'has-success': form.confirmPassword.$dirty && form.confirmPassword.$valid,
+																 'has-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid }">
 					<label for="confirmPassword">Password confirmation: </label>
-					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" />
+					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="usr.confirmPassword" 
+						   compare-to="usr.password" required />
+					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.confirmPassword.$dirty && form.confirmPassword.$valid,
+																			  'glyphicon-remove': form.confirmPassword.$dirty && form.confirmPassword.$invalid }"></span>
+					<span ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid" style="color:red">Les 2 passwords doivent correspondent</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="prenom">Prenom: </label>
-					<input type="text" class="form-control" id="prenom" name="prenom" />
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="nom">Nom: </label>
-					<input type="text" class="form-control" id="nom" name="nom" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="surnom">Surnom: </label>
-					<input type="text" class="form-control" id="surnom" name="surnom" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-4">
-					<label for="dateBapteme">Date de bapteme: </label>
-					<input type="text" class="form-control" id="dateBapteme" name="dateBapteme" />
-				</div>
-				<div class="form-group col-sm-4">
-					<label for="villeBapteme">Ville de bapteme: </label>
-					<input type="text" class="form-control" id="villeBapteme" name="villeBapteme" />
-				</div>
-                <div class="form-group col-sm-4">
-                    <label for="filiereBapteme">Filiere de bapteme: </label>
-                    <input type="text" class="form-control" id="filiereBapteme" name="filiereBapteme" />
-                </div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="parrain">Parrain: </label>
-					<input type="text" class="form-control" id="parrain" name="parrain" />
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="marraine">Marraine: </label>
-					<input type="text" class="form-control" id="marraine" name="marraine" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="gmBapteme">GM de bapteme: </label>
-					<input type="text" class="form-control" id="gmBapteme" name="gmBapteme" />
-				</div>
-				<div class="form-group col-sm-6">
-					<label for="gcBapteme">GC de bapteme: </label>
-					<input type="text" class="form-control" id="gcBapteme" name="gcBapteme" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="villeActuelle">Ville actuelle: </label>
-					<input type="text" class="form-control" id="villeActuelle" name="villeActuelle" />
-				</div>
-				<div class="form-group col-sm-2">
-					<label for="etudiant">Etudiant: </label>
-					<input type="checkbox" id="isEtudiant" name="isEtudiant" />
-				</div>
-				<div class="form-group col-sm-2">
-					<label for="GM">GM: </label>
-					<input type="checkbox" id="isGM" name="isGM" />
-				</div>
-				<div class="form-group col-sm-2">
-					<label for="GM">GC: </label>
-					<input type="checkbox" id="isGC" name="isGC" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-6">
-					<label for="tel">Tel: </label>
-					<input type="text" class="form-control" id="tel" name="tel" />
-				</div>
-				<div class="form-group col-sm-6">
+				<div class="form-group has-feedback" ng-class="{ 'has-success': form.mail.$dirty && form.mail.$valid,
+																 'has-error': form.mail.$dirty && form.mail.$invalid }">
 					<label for="mail">Email: </label>
-					<input type="text" class="form-control" id="mail" name="mail" />
+					<input type="email" class="form-control" id="mail" name="mail" ng-model="usr.email" required />
+					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.mail.$dirty && form.mail.$valid,
+																			  'glyphicon-remove': form.mail.$dirty && form.mail.$invalid }"></span>
+					<span ng-show="form.mail.$dirty && form.mail.$invalid" style="color:red">Email incorrect</span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-4">
-					<label for="facebook">Facebook: </label>
-					<input type="text" class="form-control" id="facebook" name="facebook" />
-				</div>
-				<div class="form-group col-sm-4">
-					<label for="linkedin">LinkedIn: </label>
-					<input type="text" class="form-control" id="linkedin" name="linkedin" />
-				</div>
-				<div class="form-group col-sm-4">
-					<label for="twitter">Twitter: </label>
-					<input type="text" class="form-control" id="twitter" name="twitter" />
-				</div>
-			</div>
-			<button type="submit" class="btn btn-default">OK</button>
-		</form>
+				<button type="submit" class="btn btn-default" ng-click="register(usr.login, usr.password, usr.confirmPassword, usr.email)"
+						ng-disabled="form.$invalid">
+					OK
+				</button>
+			</form>
+		</div>
 	</div>
 </div>

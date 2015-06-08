@@ -33,8 +33,6 @@ namespace Annufal.Authentication
                 UserName = "SuperUser",
                 Email = "super.user@admin.com",
                 EmailConfirmed = true,
-                FirstName = "Super",
-                LastName = "User",
                 JoinDate = DateTime.Now.AddYears(-3)
             };
 

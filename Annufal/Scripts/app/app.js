@@ -14,10 +14,17 @@
 			.when('/landing', {
 				templateUrl: 'Templates/landing.html'
 			})
+			.when('/admin', {
+				templateUrl: 'Templates/admin/home.html'
+			})
+			.when('/profile', {
+				templateUrl: 'Templates/profile/show.html'
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
 	}]);
+
 
 // ---------------------------------------- Config ---------------------------------------
 //
@@ -27,9 +34,15 @@
 	app.config(['$httpProvider', function ($httpProvider) {
 		$httpProvider.interceptors.push('authInterceptor');
 	}]);
+
 // ---------------------------------------- Controllers -------------------------------------
 //
-
+	app.controller('registerCtrl', ['$scope', 'userSvc', function ($scope, userSvc) {
+		$scope.register = function (username, password, confirmPassword, email) {
+			userSvc.create(username, password, confirmPassword, email)
+				   .then(function (data) { alert('worked'); }, function (data) { alert('error'); });
+		};
+	}]);
 
 
 // ---------------------------------------- Services ----------------------------------------
@@ -59,13 +72,14 @@
 		}
 	}]);
 
-	//JWT authentication token handling service
+	//authentication service
 	app.service('authSvc', ['$window', function ($window) {
 		var self = this;
 
 		self.parseJwtToken = function (token) {
 			var base64Url = token.split('.')[1];
 			var base64 = base64Url.replace('-', '+').replace('_', '/');
+			console.log(JSON.parse($window.atob(base64))); //DEBUG
 			return JSON.parse($window.atob(base64));
 		};
 
@@ -75,10 +89,24 @@
 
 		self.saveAuthToken = function (token) {
 			$window.localStorage['authToken'] = token;
+			//save other common params
+			if (token) {
+				var params = self.parseJwtToken(token);
+				if (params.unique_name)
+					$window.localStorage['user_name'] = params.unique_name;
+				if (params.role) {
+					params.role.forEach(function (r) {
+						if (r.toUpperCase() === 'ADMIN')
+							$window.localStorage['isAdmin'] = true;
+					});
+				}
+			}
 		};
 
 		self.deleteAuthToken = function () {
 			$window.localStorage.removeItem('authToken');
+			$window.localStorage.removeItem('user_name');
+			$window.localStorage.removeItem('isAdmin');
 		}
 
 		self.isLoggedIn = function () {
@@ -92,22 +120,37 @@
 		};
 
 		self.loggedInUserName = function () {
-			var token = self.getAuthToken();
-			if (token) {
-				var params = self.parseJwtToken(token);
-				return params.unique_name;
-			}
+			return $window.localStorage['user_name'];
+		}
+
+		self.loggedInUserIsAdmin = function () {
+			return $window.localStorage['isAdmin'];
+		}
+	}]);
+
+	//users management service
+	app.service('userSvc', ['$http', 'API_URL', function ($http, API_URL) {
+		self = this;
+
+		self.create = function (username, password, confirmPassword, email) {
+			return $http.post(API_URL + '/account/create', {
+				username: username,
+				password: password,
+				confirmPassword: confirmPassword,
+				email: email
+			});
 		}
 	}]);
 
 // ---------------------------------------- Directives --------------------------------------
-//
+
+	//login box component
 	app.directive('loginForm', function(){
 		return {
 			restrict: 'EA',
 			templateUrl: 'Templates/login.html',
-			controller: ['$scope', '$http', '$location', 'authSvc', 'API_TOKEN_URL', 'API_URL',
-				function ($scope, $http, $location, authSvc, API_TOKEN_URL, API_URL) {
+			controller: ['$scope', '$location', '$http', 'authSvc', 'API_TOKEN_URL',
+				function ($scope, $location, $http, authSvc, API_TOKEN_URL) {
 					$scope.login = function (username, password) {
 						$http.post(API_TOKEN_URL, $.param({
 							grant_type: 'password',
@@ -144,7 +187,41 @@
 					$scope.loggedInUsername = function () {
 						return authSvc.loggedInUserName();
 					};
+
+					$scope.isAdmin = function () {
+						return authSvc.loggedInUserIsAdmin();
+					};
 			}]
+		}
+	});
+
+	//left menu list component
+	app.directive('menu', function () {
+		return {
+			restrict: 'EA',
+			templateUrl: 'Templates/menu.html',
+			controller: ['$scope', function ($scope) {
+
+			}]
+		}
+	});
+
+	//custom validation directive to check if 2 fields in a form are equals
+	app.directive('compareTo', function () {
+		return {
+			require: "ngModel",
+			scope: {
+				otherModelValue: "=compareTo"
+			},
+			link: function (scope, element, attributes, ngModel) {
+				ngModel.$validators.compareTo = function (modelValue) {
+					return modelValue == scope.otherModelValue;
+				};
+
+				scope.$watch("otherModelValue", function () {
+					ngModel.$validate();
+				});
+			}
 		}
 	});
 })()

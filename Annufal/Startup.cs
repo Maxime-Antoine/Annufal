@@ -54,7 +54,7 @@ namespace Annufal
             {
                 AllowInsecureHttp = true, //to change in prod
                 TokenEndpointPath = new PathString("/api/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
                 Provider = new CustomOAuthProvider(),
                 AccessTokenFormat = new CustomJWTFormatProvider("http://localhost:60481/")
             };
