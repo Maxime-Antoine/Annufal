@@ -16,6 +16,6 @@
     </div>
 </div>
 <div ng-if="isLoggedIn()">
-    <span>Token: {{ getAuthToken() }}</span>
+    <span>{{ loggedInUsername() }} logged in</span>
     <button class="btn btn-default" ng-click="logout()">Logout</button>
 </div>
