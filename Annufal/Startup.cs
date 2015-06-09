@@ -83,6 +83,7 @@ namespace Annufal
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            //convention based routing
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
@@ -138,7 +139,7 @@ namespace Annufal
 
             //register controllers
             builder.RegisterControllers(typeof(HttpApplication).Assembly); //MVC
-            builder.RegisterApiControllers(typeof(HttpApplication).Assembly); //WebAPI
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly()); //WebAPI
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()) //Register ***Services
                    .Where(t => t.Name.EndsWith("Service"))

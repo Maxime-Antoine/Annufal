@@ -1,7 +1,7 @@
 ﻿using Annufal.Core.Profile;
 using System;
 
-namespace Annufal.Services
+namespace Annufal.Core.Profile
 {
     public class ProfileService : IProfileService
     {

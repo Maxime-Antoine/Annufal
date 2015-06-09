@@ -12,7 +12,7 @@ namespace Annufal.Controllers.API
 {
     public abstract class BaseApiController : ApiController
     {
-        private ModelFactory _modelFactory;
+        private AuthModelFactory _modelFactory;
         private ApplicationUserManager _appUserManager = null;
         private ApplicationRoleManager _appRoleManager = null;
 
@@ -32,12 +32,12 @@ namespace Annufal.Controllers.API
             }
         }
 
-        protected ModelFactory ModelFactory
+        protected AuthModelFactory ModelFactory
         {
             get
             {
                 if (_modelFactory == null)
-                    _modelFactory = new ModelFactory(this.Request, this.AppUserManager);
+                    _modelFactory = new AuthModelFactory(this.Request, this.AppUserManager);
                 return _modelFactory;
             }
         }

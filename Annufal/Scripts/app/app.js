@@ -228,7 +228,6 @@
 			templateUrl: 'Templates/login.html',
 			controller: ['$scope', '$location', '$http', '$timeout', 'authSvc', 'API_TOKEN_URL', 'API_URL',
 				function ($scope, $location, $http, $timeout, authSvc, API_TOKEN_URL, API_URL) {
-					self = this;
 					$scope.input = {};
 
 					$scope.login = function () {
@@ -239,7 +238,7 @@
 						})).success(function (data) {
 							$location.path('/landing');
 						}).error(function (data) {
-							self.showMsg('error', data.error_description, 5000);
+							$scope.showMsg('error', data.error_description, 5000);
 						});
 					};
 
@@ -264,19 +263,20 @@
 
 					$scope.resetPwd = function () {
 						if (!$scope.input.username) {
-							self.showMsg('error', "Nom d'utilisateur vide", 5000);
+							$scope.showMsg('error', "Nom d'utilisateur vide", 5000);
 						} else {
 							$http.get(API_URL + 'account/resetPassword/' + $scope.input.username)
 								 .success(function (data) {
-									 self.showMsg('info', "Un email a ete envoye", 5000);
+									 $scope.showMsg('info', "Un email a ete envoye", 5000);
 								 })
 								 .error(function (data) {
-									 self.showMsg('error', "Utilisateur inconnu", 5000);
+									 $scope.showMsg('error', "Utilisateur inconnu", 5000);
 								 });
 						}
 					};
 
-					self.showMsg = function(type, msg, delay){
+                    //need not be in $scope, but helps with 'this' scope issues
+					$scope.showMsg = function(type, msg, delay){
 						$scope.msgType = type;
 						$scope.msg = msg;
 						$timeout(function () {

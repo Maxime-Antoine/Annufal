@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http.Routing;
 
 namespace Annufal.Authentication
 {
-    public class ModelFactory
+    public class AuthModelFactory
     {
         private UrlHelper _urlHelper;
         private ApplicationUserManager _appUserManager;
 
-        public ModelFactory(HttpRequestMessage request, ApplicationUserManager appUserManager)
+        public AuthModelFactory(HttpRequestMessage request, ApplicationUserManager appUserManager)
         {
             _urlHelper = new UrlHelper(request);
             _appUserManager = appUserManager;
@@ -43,26 +39,5 @@ namespace Annufal.Authentication
                 Name = appRole.Name
             };
         }
-    }
-
-    public class UserReturnModel
-    {
-        public string Url { get; set; }
-        public string Id { get; set; }
-        public string UserName { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public int Level { get; set; }
-        public DateTime JoinDate { get; set; }
-        public IList<string> Roles { get; set; }
-        public IList<System.Security.Claims.Claim> Claims { get; set; }
-    }
-
-    public class RoleReturnModel
-    {
-        public string Url { get; set; }
-        public string Id { get; set; }
-        public string Name { get; set; }
     }
 }
