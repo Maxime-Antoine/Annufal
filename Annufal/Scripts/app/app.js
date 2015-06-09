@@ -9,26 +9,56 @@
 				templateUrl: 'Templates/home.html'
 			})
 			.when('/register', {
+				controller: 'registerCtrl',
 				templateUrl: 'Templates/register.html'
 			})
 			.when('/passwordReset', {
 				templateUrl: 'Templates/passwordReset.html'
 			})
 			.when('/landing', {
-				templateUrl: 'Templates/landing.html'
-			})
-			.when('/admin', {
-				templateUrl: 'Templates/admin/home.html'
+				templateUrl: 'Templates/landing.html',
+				access: {
+					requiresLogin: true
+				}
 			})
 			.when('/profile', {
-				templateUrl: 'Templates/profile/show.html'
+				templateUrl: 'Templates/profile/show.html',
+				access: {
+					requiresLogin: true
+				}
+			})
+			.when('/profile/create', {
+				controller: 'createProfileCtrl',
+				templateUrl: 'Templates/profile/create.html',
+				access: {
+					requiresLogin: true
+				}
+			})
+			.when('/admin', {
+				templateUrl: 'Templates/admin/home.html',
+				access: {
+					requiresLogin: true,
+					requiredPermissions: ['Admin'],
+					permissionType: 'AtLeastOne'
+				}
 			})
 			.otherwise({
 				redirectTo: '/'
 			});
 	}]);
 
+	app.run(['$rootScope', '$location', 'authSvc', function ($rootScope, $location, authSvc) {
+		$rootScope.$on('$routeChangeStart', function(event, args){
+			if(args.access !== undefined){ //if access conditions
+				authorizationResult = authSvc.authorizeRoute(args.access);
 
+				if (authorizationResult === 'LoginRequired')
+					$location.path('/');
+				else if (authorizationResult === 'NotAuthorized')
+					$location.path('/').replace();
+			}
+		});
+	}]);
 // ---------------------------------------- Config ---------------------------------------
 //
 	app.constant('API_URL', 'api/');
@@ -46,7 +76,6 @@
 				   .then(function (data) { alert('worked'); }, function (data) { alert('error'); });
 		};
 	}]);
-
 
 // ---------------------------------------- Services ----------------------------------------
 
@@ -82,7 +111,6 @@
 		self.parseJwtToken = function (token) {
 			var base64Url = token.split('.')[1];
 			var base64 = base64Url.replace('-', '+').replace('_', '/');
-			console.log(JSON.parse($window.atob(base64))); //DEBUG
 			return JSON.parse($window.atob(base64));
 		};
 
@@ -97,20 +125,16 @@
 				var params = self.parseJwtToken(token);
 				if (params.unique_name)
 					$window.localStorage['user_name'] = params.unique_name;
-				if (params.role) {
-					params.role.forEach(function (r) {
-						if (r.toUpperCase() === 'ADMIN')
-							$window.localStorage['isAdmin'] = true;
-					});
-				}
+				if (params.role)
+					$window.localStorage['user_roles'] = params.role;
 			}
 		};
 
 		self.deleteAuthToken = function () {
 			$window.localStorage.removeItem('authToken');
 			$window.localStorage.removeItem('user_name');
-			$window.localStorage.removeItem('isAdmin');
-		}
+			$window.localStorage.removeItem('user_roles');
+		};
 
 		self.isLoggedIn = function () {
 			var token = self.getAuthToken();
@@ -124,11 +148,61 @@
 
 		self.loggedInUserName = function () {
 			return $window.localStorage['user_name'];
-		}
+		};
 
-		self.loggedInUserIsAdmin = function () {
-			return $window.localStorage['isAdmin'];
-		}
+		self.isAdmin = function () {
+			return self.isInRole('Admin');
+		};
+
+		self.isInRole = function (role) {
+			var found = false;
+			var roles = $window.localStorage['user_roles']
+			
+			if (roles) {
+				roles.split(',').forEach(function (r) {
+					if (r.toUpperCase() === role.toUpperCase()) {
+						found = true;
+					}
+				});
+			}
+
+			return found;
+		};
+
+		//authorize an angular route access
+		self.authorizeRoute = function(access){
+			if (!access.requiresLogin)
+				return 'Authorized';
+
+			if (!self.isLoggedIn())
+				return 'LoginRequired';
+
+			//requiresLogin + loggedIn => now check roles requirement
+			if (!access.requiredPermissions)
+				return 'Authorized';
+
+			switch(access.permissionType){
+				case 'AtLeastOne':
+					var result = 'NotAuthorized';
+					//if any of the required role is in user profile => Authorized
+					access.requiredPermissions.forEach(function(rp){
+						if(self.isInRole(rp))
+							result = 'Authorized';
+					});
+					return result;
+				case 'All':
+					var result = 'Authorized';
+					//if any of the required role is not in user profile => NotAuthorized
+					access.requiredPermissions.forEach(function(rp){
+						if(!self.isInRole(rp))
+							result = 'Not Authorized';
+					});
+					return result;
+			}
+
+			//unknown case... in doubt => not authorized
+			return 'NotAuthorized';
+		};
 	}]);
 
 	//users management service
@@ -136,7 +210,7 @@
 		self = this;
 
 		self.create = function (username, password, confirmPassword, email) {
-			return $http.post(API_URL + '/account/create', {
+			return $http.post(API_URL + 'account/create', {
 				username: username,
 				password: password,
 				confirmPassword: confirmPassword,
@@ -182,17 +256,11 @@
 						return authSvc.isLoggedIn();
 					};
 
-					$scope.getAuthToken = function () {
-						return authSvc.getAuthToken();
-					};
+					$scope.getAuthToken = authSvc.getAuthToken;
 
-					$scope.loggedInUsername = function () {
-						return authSvc.loggedInUserName();
-					};
+					$scope.loggedInUsername = authSvc.loggedInUserName;
 
-					$scope.isAdmin = function () {
-						return authSvc.loggedInUserIsAdmin();
-					};
+					$scope.isAdmin = authSvc.isAdmin;
 
 					$scope.resetPwd = function () {
 						if (!$scope.input.username) {

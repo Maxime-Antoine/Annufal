@@ -10,7 +10,7 @@ namespace Annufal.Authentication
         {
             //await configSendGridasync(message);
 
-            dynamic email = new Email("ConfirmRegistration");
+            dynamic email = new Email("AuthMailTemplate");
             email.To = message.Destination;
             email.From = "hello@annufal.com";
             email.Subject = message.Subject;

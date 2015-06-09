@@ -42,7 +42,6 @@ namespace Annufal.Authentication
             {
                 roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
                 roleManager.Create(new IdentityRole { Name = "Admin" });
-                roleManager.Create(new IdentityRole { Name = "User" });
             }
 
             var adminUser = manager.FindByName("SuperUser");

@@ -267,7 +267,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Emails\ConfirmRegistration.cshtml" />
+    <Content Include="Views\Emails\AuthMailTemplate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
