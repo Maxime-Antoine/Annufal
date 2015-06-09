@@ -11,6 +11,9 @@
 			.when('/register', {
 				templateUrl: 'Templates/register.html'
 			})
+			.when('/passwordReset', {
+				templateUrl: 'Templates/passwordReset.html'
+			})
 			.when('/landing', {
 				templateUrl: 'Templates/landing.html'
 			})
@@ -149,21 +152,20 @@
 		return {
 			restrict: 'EA',
 			templateUrl: 'Templates/login.html',
-			controller: ['$scope', '$location', '$http', 'authSvc', 'API_TOKEN_URL',
-				function ($scope, $location, $http, authSvc, API_TOKEN_URL) {
-					$scope.login = function (username, password) {
+			controller: ['$scope', '$location', '$http', '$timeout', 'authSvc', 'API_TOKEN_URL', 'API_URL',
+				function ($scope, $location, $http, $timeout, authSvc, API_TOKEN_URL, API_URL) {
+					self = this;
+					$scope.input = {};
+
+					$scope.login = function () {
 						$http.post(API_TOKEN_URL, $.param({
 							grant_type: 'password',
-							userName: username,
-							password: password
+							userName: $scope.input.username,
+							password: $scope.input.password
 						})).success(function (data) {
 							$location.path('/landing');
-							//if error, remove it
-							delete $scope.error;
-							delete $scope.errorMsg;
 						}).error(function (data) {
-							$scope.error = data.error;
-							$scope.errorMsg = data.error_description;
+							self.showMsg('error', data.error_description, 5000);
 						});
 					};
 
@@ -190,6 +192,30 @@
 
 					$scope.isAdmin = function () {
 						return authSvc.loggedInUserIsAdmin();
+					};
+
+					$scope.resetPwd = function () {
+						if (!$scope.input.username) {
+							self.showMsg('error', "Nom d'utilisateur vide", 5000);
+						} else {
+							$http.get(API_URL + 'account/resetPassword/' + $scope.input.username)
+								 .success(function (data) {
+									 self.showMsg('info', "Un email a ete envoye", 5000);
+								 })
+								 .error(function (data) {
+									 self.showMsg('error', "Utilisateur inconnu", 5000);
+								 });
+						}
+					};
+
+					self.showMsg = function(type, msg, delay){
+						$scope.msgType = type;
+						$scope.msg = msg;
+						$timeout(function () {
+							scope = $scope;
+							delete scope.msgType;
+							delete scope.msg;
+						}, delay);
 					};
 			}]
 		}

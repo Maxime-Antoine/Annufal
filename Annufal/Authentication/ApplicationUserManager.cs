@@ -19,7 +19,7 @@ namespace Annufal.Authentication
             var appUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext));
 
             //email confirmation
-            appUserManager.EmailService = new EmailService();
+            appUserManager.EmailService = new AuthEmailService();
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)

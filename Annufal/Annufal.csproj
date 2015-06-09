@@ -226,6 +226,7 @@
     <Content Include="Templates\landing.html" />
     <Content Include="Templates\login.html" />
     <Content Include="Templates\menu.html" />
+    <Content Include="Templates\passwordReset.html" />
     <Content Include="Templates\profile\create.html" />
     <Content Include="Templates\profile\show.html" />
     <Content Include="Templates\register.html" />
@@ -235,23 +236,23 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\ApplicationUser.cs" />
-    <Compile Include="Authentication\ChangePasswordBindingModel.cs" />
-    <Compile Include="Authentication\CreateRoleBindingModel.cs" />
-    <Compile Include="Authentication\CreateUserBindingModel.cs" />
-    <Compile Include="Authentication\CustomJWTFormatProvider.cs" />
-    <Compile Include="Authentication\CustomOAuthProvider.cs" />
-    <Compile Include="Authentication\EmailService.cs" />
-    <Compile Include="Authentication\ModelFactory.cs" />
+    <Compile Include="Authentication\Models\ApplicationUser.cs" />
+    <Compile Include="Authentication\Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="Authentication\Models\CreateRoleBindingModel.cs" />
+    <Compile Include="Authentication\Models\CreateUserBindingModel.cs" />
+    <Compile Include="Authentication\Services\CustomJWTFormatProvider.cs" />
+    <Compile Include="Authentication\Services\CustomOAuthProvider.cs" />
+    <Compile Include="Authentication\Services\AuthEmailService.cs" />
+    <Compile Include="Authentication\Services\ModelFactory.cs" />
     <Compile Include="Authentication\ApplicationUserManager.cs" />
     <Compile Include="Authentication\ApplicationRoleManager.cs" />
-    <Compile Include="Authentication\UserInRoleModel.cs" />
+    <Compile Include="Authentication\Models\UserInRoleModel.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\BaseApiController.cs" />
     <Compile Include="Controllers\API\RoleController.cs" />
     <Compile Include="Controllers\API\TestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Authentication\AuthDbContext.cs" />
+    <Compile Include="Authentication\Services\AuthDbContext.cs" />
     <Compile Include="Core\Profile\ProfileModel.cs" />
     <Compile Include="Services\IProfileService.cs" />
     <Compile Include="Services\ProfileService.cs" />
