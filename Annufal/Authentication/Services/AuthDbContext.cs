@@ -20,7 +20,7 @@ namespace Annufal.Authentication
         }
     }
 
-    internal class AuthContextInitializer : DropCreateDatabaseAlways<AuthDbContext>
+    internal class AuthContextInitializer : DropCreateDatabaseIfModelChanges<AuthDbContext>
     {
         protected override void Seed(AuthDbContext context)
         {

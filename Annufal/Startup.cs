@@ -22,6 +22,8 @@ namespace Annufal
 
             IoCConfig.Config(app, config);
 
+            AutoMapperConfig.Config();
+
             app.UseWebApi(config);
         }
     }

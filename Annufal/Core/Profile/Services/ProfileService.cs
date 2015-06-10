@@ -1,33 +1,48 @@
-﻿using Annufal.Core.Profile;
-using System;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Annufal.Core.Profile
 {
     public class ProfileService : IProfileService
     {
-        public void CreateProfile(CreateProfileBindingModel profile)
+        public async Task<ProfileModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var db = new AppDbContext())
+            {
+                return await db.Profiles.FindAsync(id);
+            }
         }
 
-        public void EditProfile(CreateProfileBindingModel profile)
+        public async Task<ProfileModel> GetForUserAsync(string userId)
         {
-            throw new NotImplementedException();
+            using (var db = new AppDbContext())
+            {
+                return await db.Profiles.Where(p => p.UserId == userId).SingleOrDefaultAsync();
+            }
         }
 
-        public void ValidateProfile(string login)
+        public async Task<bool> CreateProfileAsync(ProfileModel profile)
         {
-            throw new NotImplementedException();
+            using (var db = new AppDbContext())
+            {
+                db.Profiles.Add(profile);
+                await db.SaveChangesAsync();
+
+                return true;
+            }
         }
 
-        public void RefuseProfile(string login)
+        public async Task<bool> EditProfileAsync(ProfileModel profile)
         {
-            throw new NotImplementedException();
-        }
+            using (var db = new AppDbContext())
+            {
+                db.Profiles.Attach(profile);
+                db.Entry(profile).State = EntityState.Modified;
+                await db.SaveChangesAsync();
 
-        public void DeleteProfile(string login)
-        {
-            throw new NotImplementedException();
+                return true;
+            }
         }
     }
 }

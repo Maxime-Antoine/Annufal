@@ -1,19 +1,17 @@
 ﻿using Annufal.Core.Profile;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Annufal.Controllers.API
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/profile")]
     public class ProfileController : BaseApiController
     {
-        IProfileService _profileSvc;
+        private IProfileService _profileSvc;
 
         public ProfileController(IProfileService profileSvc)
         {
@@ -24,29 +22,48 @@ namespace Annufal.Controllers.API
         [Route("{profileId:int}")]
         public async Task<IHttpActionResult> Get(int profileId)
         {
-            //TODO
+            var profile = await _profileSvc.GetByIdAsync(profileId);
 
-            return null;
+            if (profile == null)
+                return NotFound();
+            else
+                return Ok(profile);
         }
 
         [HttpGet]
         [Route("{userId:guid}")]
         public async Task<IHttpActionResult> GetForUser(string userId)
         {
-            //TODO
+            var profile = await _profileSvc.GetForUserAsync(userId);
 
-            return null;
+            if (profile == null)
+                return NotFound();
+            else
+                return Ok(profile);
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Create(CreateProfileBindingModel profile)
+        public async Task<IHttpActionResult> Create(CreateProfileBindingModel profileBindingModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //TODO
+            //check that this user has no profile so far
+            var curProfile = await _profileSvc.GetForUserAsync(User.Identity.GetUserId());
+            if (curProfile != null)
+                return BadRequest("This user has already a profile");
 
-            return null;
+            //else create the profile
+            var profile = Mapper.Map<CreateProfileBindingModel, ProfileModel>(profileBindingModel);
+
+            //complete data
+            profile.Status = EProfileStatus.New;
+            profile.CreationTimeStamp = DateTime.Now;
+            profile.UserId = User.Identity.GetUserId();
+
+            await _profileSvc.CreateProfileAsync(profile);
+
+            return Ok();
         }
 
         [HttpPut]

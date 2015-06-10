@@ -1,15 +1,14 @@
-﻿namespace Annufal.Core.Profile
+﻿using System.Threading.Tasks;
+namespace Annufal.Core.Profile
 {
     public interface IProfileService
     {
-        void CreateProfile(CreateProfileBindingModel profile);
+        Task<ProfileModel> GetByIdAsync(int id);
 
-        void EditProfile(CreateProfileBindingModel profile);
+        Task<ProfileModel> GetForUserAsync(string userId);
 
-        void ValidateProfile(string login);
+        Task<bool> CreateProfileAsync(ProfileModel profile);
 
-        void RefuseProfile(string login);
-
-        void DeleteProfile(string login);
+        Task<bool> EditProfileAsync(ProfileModel profile);
     }
 }

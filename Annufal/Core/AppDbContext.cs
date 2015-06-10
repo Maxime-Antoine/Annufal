@@ -1,14 +1,23 @@
 ﻿using Annufal.Core.Profile;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace Annufal.Core
 {
     public class AppDbContext : DbContext
     {
-        DbSet<CreateProfileBindingModel> Profiles { get; set; }
+        public AppDbContext()
+            :base("AppContext")
+        {
+            Database.SetInitializer(new AppDbContextInitializer());
+        }
+
+        public DbSet<ProfileModel> Profiles { get; set; }
+
+        public DbSet<ProfileValidationModel> ProfileValidations { get; set; }
+    }
+
+    public class AppDbContextInitializer : DropCreateDatabaseAlways<AppDbContext>
+    {
+
     }
 }
