@@ -111,7 +111,11 @@ namespace Annufal
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-route.js",
-                "~/Scripts/app/app.js"));
+                "~/Scripts/app/app.js",
+                "~/Scripts/app/app.routes.js",
+                "~/Scripts/app/app.auth.js",
+                "~/Scripts/app/app.components.login.js",
+                "~/Scripts/app/app.conponents.menu.js"));
 
             BundleTable.EnableOptimizations = true; //force optimizations regardless of web.config settings
 
