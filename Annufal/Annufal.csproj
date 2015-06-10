@@ -230,7 +230,7 @@
     <Content Include="Templates\landing.html" />
     <Content Include="Templates\login.html" />
     <Content Include="Templates\menu.html" />
-    <Content Include="Templates\passwordReset.html" />
+    <Content Include="Templates\display-message.html" />
     <Content Include="Templates\profile\create.html" />
     <Content Include="Templates\profile\show.html" />
     <Content Include="Templates\register.html" />

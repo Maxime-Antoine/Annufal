@@ -10,8 +10,9 @@
                 controller: 'registerCtrl',
                 templateUrl: 'Templates/register.html'
             })
-            .when('/passwordReset', {
-                templateUrl: 'Templates/passwordReset.html'
+            .when('/display-message/:msg', {
+                templateUrl: 'Templates/display-message.html',
+                controller: 'displayMessageCtrl'
             })
             .when('/landing', {
                 templateUrl: 'Templates/landing.html',

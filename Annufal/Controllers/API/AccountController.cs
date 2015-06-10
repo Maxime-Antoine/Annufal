@@ -87,10 +87,18 @@ namespace Annufal.Controllers.API
 
             IdentityResult result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
 
+            //redirect to confirmation page
+            string redirectUrl;
+
             if (result.Succeeded)
-                return Ok();
+                redirectUrl = ConfigurationManager.AppSettings["AppRootUrl"].ToString() + "/#/display-message/Nouveau compte actif !";
             else
-                return GetErrorResult(result);
+                redirectUrl = ConfigurationManager.AppSettings["AppRootUrl"].ToString() + "/#/display-message/Une erreur s'est produite";
+
+            var response = new HttpResponseMessage(HttpStatusCode.Redirect);
+            response.Headers.Location = new Uri(redirectUrl);
+
+            throw new HttpResponseException(response);
         }
 
         [Route("ChangePassword")]
@@ -194,7 +202,7 @@ namespace Annufal.Controllers.API
 
             await this.AppUserManager.SendEmailAsync(userId, "Password reset", "Your password has been reset to : " + newPwd + ". Please change it ASAP.");
 
-            var redirectUrl = ConfigurationManager.AppSettings["AppRootUrl"].ToString() + "/#/passwordReset";
+            var redirectUrl = ConfigurationManager.AppSettings["AppRootUrl"].ToString() + "/#/display-message/Un nouveau mot de passe a ete envoye par email";
 
             var response = new HttpResponseMessage(HttpStatusCode.Redirect);
             response.Headers.Location = new Uri(redirectUrl);
