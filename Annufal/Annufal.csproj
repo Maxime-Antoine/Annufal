@@ -240,6 +240,10 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\IoCConfig.cs" />
+    <Compile Include="App_Start\MvcConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authentication\Models\ApplicationUser.cs" />
     <Compile Include="Authentication\Models\ChangePasswordBindingModel.cs" />
     <Compile Include="Authentication\Models\CreateRoleBindingModel.cs" />
