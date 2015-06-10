@@ -194,40 +194,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\app\app.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Content\css\app.css" />
+    <Content Include="Content\css\vendor\bootstrap-theme.css" />
+    <Content Include="Content\css\vendor\bootstrap-theme.min.css" />
+    <Content Include="Content\css\vendor\bootstrap.css" />
+    <Content Include="Content\css\vendor\bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\css\vendor\bootstrap-theme.css.map" />
+    <Content Include="Content\css\vendor\bootstrap.css.map" />
+    <Content Include="Scripts\vendor\angular-route.js" />
+    <Content Include="Scripts\vendor\angular-route.min.js" />
+    <Content Include="Scripts\vendor\angular.js" />
+    <Content Include="Scripts\vendor\angular.min.js" />
+    <Content Include="Scripts\vendor\angular.min.js.map" />
+    <Content Include="Scripts\vendor\angular-route.min.js.map" />
     <Content Include="Scripts\app\app.components.login.js" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\angular-mocks.js" />
+    <None Include="Scripts\vendor\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\vendor\angular-mocks.js" />
     <Content Include="Scripts\app\app.auth.js" />
     <Content Include="Scripts\app\app.components.menu.js" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\app.routes.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\vendor\bootstrap.js" />
+    <Content Include="Scripts\vendor\bootstrap.min.js" />
+    <Content Include="Scripts\vendor\jquery-2.1.4.js" />
+    <Content Include="Scripts\vendor\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\vendor\modernizr-2.8.3.js" />
+    <Content Include="Scripts\vendor\npm.js" />
     <Content Include="Templates\admin\home.html" />
     <Content Include="Templates\home.html" />
-    <Content Include="Templates\landing.html" />
     <Content Include="Templates\login.html" />
     <Content Include="Templates\menu.html" />
     <Content Include="Templates\display-message.html" />
@@ -237,7 +236,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Scripts\vendor\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -265,7 +264,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Authentication\Services\AuthDbContext.cs" />
     <Compile Include="Core\AppDbContext.cs" />
-    <Compile Include="Core\Profile\Models\ProfileModel.cs" />
+    <Compile Include="Core\Profile\Models\CreateProfileBindingModel.cs" />
     <Compile Include="Core\Profile\Services\IProfileService.cs" />
     <Compile Include="Core\Profile\Services\ProfileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

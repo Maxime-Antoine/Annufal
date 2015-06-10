@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Annufal.Authentication
 {
@@ -10,10 +6,13 @@ namespace Annufal.Authentication
     {
         [Required]
         [EmailAddress]
+        [MaxLength(100, ErrorMessage="Email must be no more than 100 characters long")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
+        [MinLength(3, ErrorMessage="Username must be at least 3 characters long")]
+        [MaxLength(50, ErrorMessage="Username must be no more than 50 characters long")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 

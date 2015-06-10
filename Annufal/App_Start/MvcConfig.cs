@@ -23,18 +23,18 @@ namespace Annufal
             var bundles = BundleTable.Bundles;
 
             bundles.Add(new StyleBundle("~/bundles/styles").Include(
-                 "~/Content/bootstrap.css",
-                 "~/Content/bootstrap-theme.css",
-                 "~/Content/app/app.css"));
+                 "~/Content/css/vendor/bootstrap.css",
+                 "~/Content/css/vendor/bootstrap-theme.css",
+                 "~/Content/css/app.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/modernizr-{version}.js"));
+                "~/Scripts/vendor/modernizr-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                "~/Scripts/jquery-{version}.js",
-                "~/Scripts/bootstrap.js",
-                "~/Scripts/angular.js",
-                "~/Scripts/angular-route.js",
+                "~/Scripts/vendor/jquery-{version}.js",
+                "~/Scripts/vendor/bootstrap.js",
+                "~/Scripts/vendor/angular.js",
+                "~/Scripts/vendor/angular-route.js",
                 "~/Scripts/app/app.js",
                 "~/Scripts/app/app.routes.js",
                 "~/Scripts/app/app.auth.js",

@@ -18,9 +18,9 @@
 				authorizationResult = authSvc.authorizeRoute(args.access);
 
 				if (authorizationResult === 'LoginRequired')
-					$location.path('/');
+					$location.path('/display-message/Login requis');
 				else if (authorizationResult === 'NotAuthorized')
-					$location.path('/').replace();
+					$location.path('/display-message/Acces interdit').replace();
 			}
 		});
 	}]);

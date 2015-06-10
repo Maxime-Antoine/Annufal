@@ -11,29 +11,29 @@
 					<input type="text" class="form-control" id="login" name="login" ng-model="usr.login" ng-minlength="3" ng-maxlength="25" required />
 					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.login.$dirty && form.login.$valid,
 																			  'glyphicon-remove': form.login.$dirty && form.login.$invalid }"></span>
-					<span ng-show="form.login.$dirty && form.login.$invalid" style="color:red">Login de 3 lettres minimum requis</span>
+					<span ng-show="form.login.$dirty && form.login.$invalid" style="color:red">Login entre 3 et 25 caract&egrave;res requis</span>
 				</div>
 				<div class="form-group has-feedback" ng-class="{ 'has-success': form.password.$dirty && form.password.$valid,
 																 'has-error': form.password.$dirty && form.password.$invalid }">
 					<label for="password">Password: </label>
-					<input type="password" class="form-control" id="password" name="password" ng-model="usr.password" ng-minlength="6" required />
+					<input type="password" class="form-control" id="password" name="password" ng-model="usr.password" ng-minlength="6" ng-maxlength="100" required />
 					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.password.$dirty && form.password.$valid,
 																			  'glyphicon-remove': form.password.$dirty && form.password.$invalid }"></span>
-					<span ng-show="form.password.$dirty && form.password.$invalid" style="color:red">Password de 6 lettres minimum requis</span>
+					<span ng-show="form.password.$dirty && form.password.$invalid" style="color:red">Password entre 6 et 100 caract&egrave;res requis</span>
 				</div>
 				<div class="form-group has-feedback" ng-class="{ 'has-success': form.confirmPassword.$dirty && form.confirmPassword.$valid,
 																 'has-error': form.confirmPassword.$dirty && form.confirmPassword.$invalid }">
 					<label for="confirmPassword">Password confirmation: </label>
-					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="usr.confirmPassword" 
+					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="usr.confirmPassword"
 						   compare-to="usr.password" required />
 					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.confirmPassword.$dirty && form.confirmPassword.$valid,
 																			  'glyphicon-remove': form.confirmPassword.$dirty && form.confirmPassword.$invalid }"></span>
-					<span ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid" style="color:red">Les 2 passwords doivent correspondre</span>
+					<span ng-show="form.confirmPassword.$dirty && form.confirmPassword.$invalid" style="color:red">Les 2 mots de passe doivent correspondre</span>
 				</div>
 				<div class="form-group has-feedback" ng-class="{ 'has-success': form.mail.$dirty && form.mail.$valid,
 																 'has-error': form.mail.$dirty && form.mail.$invalid }">
 					<label for="mail">Email: </label>
-					<input type="email" class="form-control" id="mail" name="mail" ng-model="usr.email" required />
+					<input type="email" class="form-control" id="mail" name="mail" ng-model="usr.email" ng-maxlength="100" required />
 					<span class="glyphicon form-control-feedback" ng-class="{ 'glyphicon-ok': form.mail.$dirty && form.mail.$valid,
 																			  'glyphicon-remove': form.mail.$dirty && form.mail.$invalid }"></span>
 					<span ng-show="form.mail.$dirty && form.mail.$invalid" style="color:red">Email incorrect</span>

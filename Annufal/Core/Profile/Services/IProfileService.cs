@@ -2,9 +2,9 @@
 {
     public interface IProfileService
     {
-        void CreateProfile(ProfileModel profile);
+        void CreateProfile(CreateProfileBindingModel profile);
 
-        void EditProfile(ProfileModel profile);
+        void EditProfile(CreateProfileBindingModel profile);
 
         void ValidateProfile(string login);
 

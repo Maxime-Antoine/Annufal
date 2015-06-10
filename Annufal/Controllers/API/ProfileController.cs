@@ -22,7 +22,7 @@ namespace Annufal.Controllers.API
 
         [HttpGet]
         [Route("{profileId:int}")]
-        public Task<IHttpActionResult> Get(int profileId)
+        public async Task<IHttpActionResult> Get(int profileId)
         {
             //TODO
 
@@ -31,7 +31,7 @@ namespace Annufal.Controllers.API
 
         [HttpGet]
         [Route("{userId:guid}")]
-        public Task<IHttpActionResult> GetForUser(string userId)
+        public async Task<IHttpActionResult> GetForUser(string userId)
         {
             //TODO
 
@@ -39,15 +39,18 @@ namespace Annufal.Controllers.API
         }
 
         [HttpPost]
-        public Task<IHttpActionResult> Create()
+        public async Task<IHttpActionResult> Create(CreateProfileBindingModel profile)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             //TODO
 
             return null;
         }
 
         [HttpPut]
-        public Task<IHttpActionResult> Edit()
+        public async Task<IHttpActionResult> Edit()
         {
             //TODO
 

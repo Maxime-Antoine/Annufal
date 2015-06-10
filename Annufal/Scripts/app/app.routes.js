@@ -14,12 +14,6 @@
                 templateUrl: 'Templates/display-message.html',
                 controller: 'displayMessageCtrl'
             })
-            .when('/landing', {
-                templateUrl: 'Templates/landing.html',
-                access: {
-                    requiresLogin: true
-                }
-            })
             .when('/profile', {
                 templateUrl: 'Templates/profile/show.html',
                 access: {

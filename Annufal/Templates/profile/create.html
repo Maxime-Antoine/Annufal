@@ -1,98 +1,150 @@
-﻿<div class="container">
+﻿<div class="container" ng-controller="createProfileCtrl">
     <div class="row well">
         <h1 class="text-center">Profil</h1>
     </div>
     <div>
-        <form name="registerForm" class="form col-sm-10 col-sm-offset-1">
+        <form name="form" class="form col-sm-10 col-sm-offset-1" novalidate>
             <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="prenom">Prenom: </label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" />
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.prenom.$dirty && form.prenom.$valid,
+                                                                          'has-error': form.prenom.$dirty && form.prenom.$invalid }">
+                    <label for="prenom" class="control-label">Prenom: </label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" ng-model="input.prenom" ng-minlength="2" ng-maxlength="25" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.prenom.$dirty && form.prenom.$valid,
+                                                                              'glyphicon-remove': form.prenom.$dirty && form.prenom.$invalid }"></span>
                 </div>
-                <div class="form-group col-sm-6">
-                    <label for="nom">Nom: </label>
-                    <input type="text" class="form-control" id="nom" name="nom" />
+                <div class="form-group col-sm-6 has-feedback" ng-class="{ 'has-success': form.nom.$dirty && form.nom.$valid,
+                                                                          'has-error': form.nom.$dirty && form.nom.$invalid }">
+                    <label for="nom" class="control-label">Nom: </label>
+                    <input type="text" class="form-control" id="nom" name="nom" ng-model="input.nom" ng-minlength="2" ng-maxlength="25" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.nom.$dirty && form.nom.$valid,
+                                                                              'glyphicon-remove': form.nom.$dirty && form.nom.$invalid }"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="surnom">Surnom: </label>
-                    <input type="text" class="form-control" id="surnom" name="surnom" />
+                <div class="form-group col-sm-6 has-feedback" ng-class="{ 'has-success': form.surnom.$dirty && form.surnom.$valid,
+                                                                          'has-error': form.surnom.$dirty && form.surnom.$invalid }">
+                    <label for="surnom" class="control-label">Surnom: </label>
+                    <input type="text" class="form-control" id="surnom" name="surnom" ng-model="input.surnom" ng-minlength="2" ng-maxlength="50" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.surnom.$dirty && form.surnom.$valid,
+                                                                              'glyphicon-remove': form.surnom.$dirty && form.surnom.$invalid }"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-sm-4">
-                    <label for="dateBapteme">Date de bapteme: </label>
-                    <input type="text" class="form-control" id="dateBapteme" name="dateBapteme" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.dateBapteme.$dirty && form.dateBapteme.$valid,
+                                                                          'has-error': form.dateBapteme.$dirty && form.dateBapteme.$invalid }">
+                    <label for="dateBapteme" class="control-label">Date de bapteme: </label>
+                    <input type="date" class="form-control" id="dateBapteme" name="dateBapteme" ng-model="input.dateBapteme" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.dateBapteme.$dirty && form.dateBapteme.$valid,
+                                                                              'glyphicon-remove': form.dateBapteme.$dirty && form.dateBapteme.$invalid }"></span>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label for="villeBapteme">Ville de bapteme: </label>
-                    <input type="text" class="form-control" id="villeBapteme" name="villeBapteme" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.villeBapteme.$dirty && form.villeBapteme.$valid,
+                                                                          'has-error': form.nomvilleBapteme.$dirty && form.nomvilleBapteme.$invalid }">
+                    <label for="villeBapteme" class="control-label">Ville de bapteme: </label>
+                    <input type="text" class="form-control" id="villeBapteme" name="villeBapteme" ng-model="input.villeBapteme" ng-minlength="2" ng-maxlength="25" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.villeBapteme.$dirty && form.villeBapteme.$valid,
+                                                                              'glyphicon-remove': form.villeBapteme.$dirty && form.villeBapteme.$invalid }"></span>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label for="filiereBapteme">Filiere de bapteme: </label>
-                    <input type="text" class="form-control" id="filiereBapteme" name="filiereBapteme" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="parrain">Parrain: </label>
-                    <input type="text" class="form-control" id="parrain" name="parrain" />
-                </div>
-                <div class="form-group col-sm-6">
-                    <label for="marraine">Marraine: </label>
-                    <input type="text" class="form-control" id="marraine" name="marraine" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="gmBapteme">GM de bapteme: </label>
-                    <input type="text" class="form-control" id="gmBapteme" name="gmBapteme" />
-                </div>
-                <div class="form-group col-sm-6">
-                    <label for="gcBapteme">GC de bapteme: </label>
-                    <input type="text" class="form-control" id="gcBapteme" name="gcBapteme" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.filiereBapteme.$dirty && form.filiereBapteme.$valid,
+                                                                          'has-error': form.filiereBapteme.$dirty && form.filiereBapteme.$invalid }">
+                    <label for="filiereBapteme" class="control-label">Filiere de bapteme: </label>
+                    <input type="text" class="form-control" id="filiereBapteme" name="filiereBapteme" ng-model="input.filiereBapteme" ng-minlength="2" ng-maxlength="25" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.filiereBapteme.$dirty && form.filiereBapteme.$valid,
+                                                                              'glyphicon-remove': form.filiereBapteme.$dirty && form.filiereBapteme.$invalid }"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="villeActuelle">Ville actuelle: </label>
-                    <input type="text" class="form-control" id="villeActuelle" name="villeActuelle" />
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.parrain.$dirty && form.parrain.$valid,
+                                                                          'has-error': form.parrain.$dirty && form.parrain.$invalid }">
+                    <label for="parrain" class="control-label">Parrain: </label>
+                    <input type="text" class="form-control" id="parrain" name="parrain" ng-model="input.parrain" ng-minlength="2" ng-maxlength="50" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.parrain.$dirty && form.parrain.$valid,
+                                                                              'glyphicon-remove': form.parrain.$dirty && form.parrain.$invalid }"></span>
+                </div>
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.marraine.$dirty && form.marraine.$valid,
+                                                                          'has-error': form.marraine.$dirty && form.marraine.$invalid }">
+                    <label for="marraine" class="control-label">Marraine: </label>
+                    <input type="text" class="form-control" id="marraine" name="marraine" ng-model="input.marraine" ng-minlength="2" ng-maxlength="50" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.marraine.$dirty && form.marraine.$valid,
+                                                                              'glyphicon-remove': form.marraine.$dirty && form.marraine.$invalid }"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.gmBapteme.$dirty && form.gmBapteme.$valid,
+                                                                          'has-error': form.gmBapteme.$dirty && form.gmBapteme.$invalid }">
+                    <label for="gmBapteme" class="control-label">GM de bapteme: </label>
+                    <input type="text" class="form-control" id="gmBapteme" name="gmBapteme" ng-model="input.gmBapteme" ng-minlength="2" ng-maxlength="50" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.gmBapteme.$dirty && form.gmBapteme.$valid,
+                                                                              'glyphicon-remove': form.gmBapteme.$dirty && form.gmBapteme.$invalid }"></span>
+                </div>
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.gcBapteme.$dirty && form.gcBapteme.$valid,
+                                                                          'has-error': form.gcBapteme.$dirty && form.gcBapteme.$invalid }">
+                    <label for="gcBapteme" class="control-label">GC de bapteme: </label>
+                    <input type="text" class="form-control" id="gcBapteme" name="gcBapteme" ng-model="input.gcBapteme" ng-minlength="2" ng-maxlength="50" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.gcBapteme.$dirty && form.gcBapteme.$valid,
+                                                                              'glyphicon-remove': form.gcBapteme.$dirty && form.gcBapteme.$invalid }"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.villeActuelle.$dirty && form.villeActuelle.$valid,
+                                                                          'has-error': form.villeActuelle.$dirty && form.villeActuelle.$invalid }">
+                    <label for="villeActuelle" class="control-label">Ville actuelle: </label>
+                    <input type="text" class="form-control" id="villeActuelle" name="villeActuelle" ng-model="input.villeActuelle" ng-minlength="2" ng-maxlength="25" required />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.villeActuelle.$dirty && form.villeActuelle.$valid,
+                                                                              'glyphicon-remove': form.villeActuelle.$dirty && form.villeActuelle.$invalid }"></span>
                 </div>
                 <div class="form-group col-sm-2">
                     <label for="etudiant">Etudiant: </label>
-                    <input type="checkbox" id="isEtudiant" name="isEtudiant" />
+                    <input type="checkbox" id="isEtudiant" name="isEtudiant" ng-model="input.isEtudiant" />
                 </div>
                 <div class="form-group col-sm-2">
                     <label for="GM">GM: </label>
-                    <input type="checkbox" id="isGM" name="isGM" />
+                    <input type="checkbox" id="isGM" name="isGM" ng-model="input.isGM" />
                 </div>
                 <div class="form-group col-sm-2">
                     <label for="GM">GC: </label>
-                    <input type="checkbox" id="isGC" name="isGC" />
+                    <input type="checkbox" id="isGC" name="isGC" ng-model="input.isGC" />
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="tel">Tel: </label>
-                    <input type="text" class="form-control" id="tel" name="tel" />
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.tel.$dirty && form.tel.$valid,
+                                                                          'has-error': form.tel.$dirty && form.tel.$invalid }">
+                    <label for="tel" class="control-label">Tel: </label>
+                    <input type="tel" class="form-control" id="tel" name="tel" ng-model="input.tel" ng-maxlength="20" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.tel.$dirty && form.tel.$valid,
+                                                                              'glyphicon-remove': form.tel.$dirty && form.tel.$invalid }"></span>
+                </div>
+                <div class="form-group has-feedback col-sm-6" ng-class="{ 'has-success': form.email.$dirty && form.email.$valid,
+                                                                          'has-error': form.email.$dirty && form.email.$invalid }">
+                    <label for="email" class="control-label">Email: </label>
+                    <input type="email" class="form-control" id="email" name="email" ng-model="input.email" ng-maxlength="100" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.email.$dirty && form.email.$valid,
+                                                                              'glyphicon-remove': form.email.$dirty && form.email.$invalid }"></span>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-sm-4">
-                    <label for="facebook">Facebook: </label>
-                    <input type="text" class="form-control" id="facebook" name="facebook" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.facebook.$dirty && form.facebook.$valid,
+                                                                          'has-error': form.facebook.$dirty && form.facebook.$invalid }">
+                    <label for="facebook" class="control-label">Facebook: </label>
+                    <input type="text" class="form-control" id="facebook" name="facebook" ng-model="input.facebook" ng-minlength="2" ng-maxlength="100" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.facebook.$dirty && form.facebook.$valid,
+                                                                              'glyphicon-remove': form.facebook.$dirty && form.facebook.$invalid }"></span>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label for="linkedin">LinkedIn: </label>
-                    <input type="text" class="form-control" id="linkedin" name="linkedin" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.linkedin.$dirty && form.linkedin.$valid,
+                                                                          'has-error': form.linkedin.$dirty && form.linkedin.$invalid }">
+                    <label for="linkedin" class="control-label">LinkedIn: </label>
+                    <input type="text" class="form-control" id="linkedin" name="linkedin" ng-model="input.linkedin" ng-minlength="2" ng-maxlength="100" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.linkedin.$dirty && form.linkedin.$valid,
+                                                                              'glyphicon-remove': form.linkedin.$dirty && form.linkedin.$invalid }"></span>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label for="twitter">Twitter: </label>
-                    <input type="text" class="form-control" id="twitter" name="twitter" />
+                <div class="form-group has-feedback col-sm-4" ng-class="{ 'has-success': form.twitter.$dirty && form.twitter.$valid,
+                                                                          'has-error': form.twitter.$dirty && form.twitter.$invalid }">
+                    <label for="twitter" class="control-label">Twitter: </label>
+                    <input type="text" class="form-control" id="twitter" name="twitter" ng-model="input.twitter" ng-minlength="2" ng-maxlength="100" />
+                    <span class="form-control-feedback glyphicon" ng-class="{ 'glyphicon-ok': form.twitter.$dirty && form.twitter.$valid,
+                                                                              'glyphicon-remove': form.twitter.$dirty && form.twitter.$invalid }"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-default">OK</button>
+            <button type="submit" class="btn btn-default" ng-disabled="form.$dirty && form.$invalid" ng-click="create()">OK</button>
         </form>
     </div>
 </div>

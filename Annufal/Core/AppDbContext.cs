@@ -9,6 +9,6 @@ namespace Annufal.Core
 {
     public class AppDbContext : DbContext
     {
-        DbSet<ProfileModel> Profiles { get; set; }
+        DbSet<CreateProfileBindingModel> Profiles { get; set; }
     }
 }

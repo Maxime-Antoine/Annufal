@@ -5,12 +5,12 @@ namespace Annufal.Core.Profile
 {
     public class ProfileService : IProfileService
     {
-        public void CreateProfile(ProfileModel profile)
+        public void CreateProfile(CreateProfileBindingModel profile)
         {
             throw new NotImplementedException();
         }
 
-        public void EditProfile(ProfileModel profile)
+        public void EditProfile(CreateProfileBindingModel profile)
         {
             throw new NotImplementedException();
         }

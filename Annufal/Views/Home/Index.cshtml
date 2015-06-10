@@ -3,16 +3,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @Styles.Render("~/bundles/styles")
+    @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body ng-app="annufal">
-    <div class="container">
-        <div class="row">
-            <div class="pull-right">
-                <login-form></login-form>
-            </div>
-        </div>
-    </div>
+    <header class="container">
+        <login-form class="pull-right"></login-form>
+        <img class="img-responsive center-block" src="http://placehold.it/1280x200?text=header" />
+        <h10>&nbsp;</h10>
+        <img class="img-responsive center-block" src="http://placehold.it/1280x50?text=menu" />
+        <h10>&nbsp;</h10>
+    </header>
     <ng-view></ng-view>
+
+    <footer class="container">
+        <h10>&nbsp;</h10>
+        <img class="img-responsive center-block" src="http://placehold.it/1280x100?text=footer">
+    </footer>
 
     @Scripts.Render("~/bundles/scripts")
 </body>
