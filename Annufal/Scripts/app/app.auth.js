@@ -70,7 +70,9 @@
 			$window.localStorage['authToken'] = token;
 			//save other common params
 			if (token) {
-				var params = self.parseJwtToken(token);
+			    var params = self.parseJwtToken(token);
+			    if (params.nameid)
+			        $window.localStorage['user_id'] = params.nameid;
 				if (params.unique_name)
 					$window.localStorage['user_name'] = params.unique_name;
 				if (params.role)
@@ -79,7 +81,8 @@
 		};
 
 		self.deleteAuthToken = function () {
-			$window.localStorage.removeItem('authToken');
+		    $window.localStorage.removeItem('authToken');
+		    $window.localStorage.removeItem('user_id');
 			$window.localStorage.removeItem('user_name');
 			$window.localStorage.removeItem('user_roles');
 		};
@@ -96,6 +99,10 @@
 
 		self.loggedInUserName = function () {
 			return $window.localStorage['user_name'];
+		};
+
+		self.loggedInUserId = function () {
+		    return $window.localStorage['user_id'];
 		};
 
 		self.isAdmin = function () {

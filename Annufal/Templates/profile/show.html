@@ -1,3 +1,44 @@
 ﻿<div class="container">
-    <h1 class="jumbotron">Mon profil</h1>
+    <div class="row well">
+        <h1 class="text-center">Profil</h1>
+    </div>
+    <div>
+        <div class="row">
+            <span class="col-sm-6">Prenom: {{ profile.Prenom }}</span>
+            <span class="col-sm-6">Nom: {{ profile.Nom }}</span>
+        </div>
+        <div class="row">
+            <span class="col-sm-6">Surnom: {{ profile.Surnom }}</span>
+        </div>
+        <div class="row">
+            <span class="col-sm-4">Date de bapteme: {{ profile.DateBapteme }}</span>
+            <span class="col-sm-4">Ville de bapteme: {{ profile.VilleBapteme }}</span>
+            <span class="col-sm-4">Filiere de bapteme: {{ profile.FiliereBapteme }}</span>
+        </div>
+        <div class="row">
+            <span class="col-sm-6">Parrain: {{ profile.Parrain }}</span>
+            <span class="col-sm-6">Marraine: {{ profile.Marraine }}</span>
+        </div>
+        <div class="row">
+            <span class="col-sm-6">GM de bapteme: {{ profile.GmBapteme }}</span>
+            <span class="col-sm-6">GC de bapteme: {{ profile.GcBapteme }}</span>
+        </div>
+        <div class="row">
+            <span class="col-sm-3">Ville actuelle: {{ profile.VilleActuelle }}</span>
+            <div class="col-sm-8 col-sm-offset-1">
+                <span class="col-sm-4">Etudiant: <input type="checkbox" ng-model="profile.IsEtudiant" disabled /></span>
+                <span class="col-sm-4">GM: <input type="checkbox" ng-model="profile.IsGM" disabled /></span>
+                <span class="col-sm-4">GC: <input type="checkbox" ng-model="inputprofile.IsGC" disabled /></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <span class="col-sm-6">Tel: {{ profile.Tel }}</span>
+        <span class="col-sm-6">Email: {{ profile.Email }}</span>
+    </div>
+    <div class="row">
+        <span class="col-sm-4">Facebook: {{ profile.Facebook }}</span>
+        <span class="col-sm-4">LinkedIn: {{ profile.LinkedIn }}</span>
+        <span class="col-sm-4">Twitter: {{ profile.Twitter }}</span>
+    </div>
 </div>

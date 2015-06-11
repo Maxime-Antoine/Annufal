@@ -30,16 +30,19 @@ namespace Annufal
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/vendor/modernizr-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
                 "~/Scripts/vendor/jquery-{version}.js",
                 "~/Scripts/vendor/bootstrap.js",
                 "~/Scripts/vendor/angular.js",
-                "~/Scripts/vendor/angular-route.js",
+                "~/Scripts/vendor/angular-route.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/app.js",
                 "~/Scripts/app/app.routes.js",
                 "~/Scripts/app/app.auth.js",
                 "~/Scripts/app/app.components.login.js",
-                "~/Scripts/app/app.conponents.menu.js"));
+                "~/Scripts/app/app.conponents.menu.js",
+                "~/Scripts/app/app.components.profile.js"));
 
             BundleTable.EnableOptimizations = true; //force optimizations regardless of web.config settings
         }

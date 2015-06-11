@@ -15,14 +15,8 @@
                 controller: 'displayMessageCtrl'
             })
             .when('/profile', {
-                templateUrl: 'Templates/profile/show.html',
-                access: {
-                    requiresLogin: true
-                }
-            })
-            .when('/profile/create', {
-                controller: 'createProfileCtrl',
-                templateUrl: 'Templates/profile/create.html',
+                templateUrl: 'Templates/profile.html',
+                controller: 'profileCtrl',
                 access: {
                     requiresLogin: true
                 }

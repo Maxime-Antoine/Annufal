@@ -220,6 +220,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\css\vendor\bootstrap-theme.css.map" />
     <Content Include="Content\css\vendor\bootstrap.css.map" />
+    <Content Include="Scripts\app\app.components.profile.js" />
     <Content Include="Scripts\vendor\angular-route.js" />
     <Content Include="Scripts\vendor\angular-route.min.js" />
     <Content Include="Scripts\vendor\angular.js" />
@@ -244,6 +245,7 @@
     <Content Include="Templates\login.html" />
     <Content Include="Templates\menu.html" />
     <Content Include="Templates\display-message.html" />
+    <Content Include="Templates\profile.html" />
     <Content Include="Templates\profile\create.html" />
     <Content Include="Templates\profile\show.html" />
     <Content Include="Templates\register.html" />

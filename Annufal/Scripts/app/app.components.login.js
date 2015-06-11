@@ -21,7 +21,7 @@
 								userName: $scope.input.username,
 								password: $scope.input.password
 							})).success(function (data) {
-								$location.path('/landing');
+							    $location.path('/');
 							}).error(function (data) {
 								$scope.showMsg('error', data.error_description, 5000);
 							});
