@@ -213,13 +213,11 @@
     <Content Include="Content\css\vendor\bootstrap-theme.min.css" />
     <Content Include="Content\css\vendor\bootstrap.css" />
     <Content Include="Content\css\vendor\bootstrap.min.css" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\css\vendor\bootstrap-theme.css.map" />
-    <Content Include="Content\css\vendor\bootstrap.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\app\app.components.profile.js" />
     <Content Include="Scripts\vendor\angular-route.js" />
     <Content Include="Scripts\vendor\angular-route.min.js" />
@@ -228,6 +226,8 @@
     <Content Include="Scripts\vendor\angular.min.js.map" />
     <Content Include="Scripts\vendor\angular-route.min.js.map" />
     <Content Include="Scripts\app\app.components.login.js" />
+    <Content Include="Content\css\vendor\bootstrap-theme.css.map" />
+    <Content Include="Content\css\vendor\bootstrap.css.map" />
     <None Include="Scripts\vendor\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\vendor\angular-mocks.js" />
     <Content Include="Scripts\app\app.auth.js" />
